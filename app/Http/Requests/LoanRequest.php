@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\ValidateCpf;
 use App\Rules\ValidateState;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +25,7 @@ class LoanRequest extends FormRequest
     {
         return [
             'customer.name' => 'required|string',
-            'customer.cpf' => 'required|string',
+            'customer.cpf' => ['required', 'string', new ValidateCpf()],
             'customer.age' => 'required|integer|min:18|max:100',
             'customer.location' => ['required', 'string', 'size:2', 'uppercase', new ValidateState()], // State from Brazil
             'customer.income' => 'required|numeric',
